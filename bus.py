@@ -9,9 +9,12 @@ import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import os
 
-# Initialize Gemini Client
-gemini_client = genai.Client(api_key='AIzaSyBvkRovaDUpi7eKziL9Ei1gSKlz6zQqnHE')
-BOT_TOKEN = '8750545260:AAFQv7A5MMeuMiKDjgQDwbNE6BSg6p4TdQ8'
+# Pull the keys from the environment variables instead of hardcoding them
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY')
+BOT_TOKEN = os.environ.get('BOT_TOKEN')
+
+# Initialize Gemini Client using the variable
+gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
 def load_gtfs():
     with zipfile.ZipFile('gtfs.zip') as z:
