@@ -16,6 +16,18 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN')
 # Initialize Gemini Client using the variable
 gemini_client = genai.Client(api_key=GEMINI_API_KEY)
 
+class DummyHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b"Bot is awake!")
+        
+    def do_HEAD(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        
 def load_gtfs():
     with zipfile.ZipFile('gtfs.zip') as z:
         routes = pd.read_csv(z.open('routes.txt'))
